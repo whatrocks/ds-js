@@ -146,14 +146,98 @@ class BSTES6 {
     }
     iterate([this])
   }
+
+
+}
+
+// var isValidBST = function(tree) {
+//
+//   var result = true;
+//   // left must be less than center
+//   // right be greater than fenter
+//
+//   var recurse = function(node, path) {
+//
+//     console.log("checking node: ", node.value);
+//     if (!node.left && !node.right) {
+//       return;
+//     }
+//
+//     for (var i = 0; i < path.length; i++) {
+//       if ( node.value )
+//     }
+//
+//     if (node.left) {
+//
+//       if (node.left.value >= node.value) {
+//         result = false;
+//         return;
+//       }
+//       path.push(node)
+//       recurse(node.left);
+//
+//     }
+//
+//     if (node.right) {
+//
+//       if (node.right.value <= node.value) {
+//         result = false;
+//         return;
+//       }
+//
+//       path.push(node);
+//       recurse(node.right, node);
+//
+//     }
+//
+//   }
+//
+//   recurse(tree, []);
+//
+//   return result;
+// }
+
+var find2ndLargest = function(bst) {
+
+  var second;
+
+  var finder = function(node) {
+
+    console.log("checking: ", node.value);
+    // Found a leaf, return
+    if (!node.left && !node.right) {
+      if (node.value > second.value) {
+        second = node;
+      }
+      return;
+    }
+
+    if (node.right) {
+      second = node;
+      finder(node.right);
+    } else {
+      if (node.left) {
+        second = node.left;
+        finder(node.left);
+      }
+      return;
+    }
+
+  }
+
+  finder(bst);
+  return second.value;
+
 }
 
 let myBST = new BSTES6(5);
-myBST.insert(23);
 myBST.insert(3);
 myBST.insert(8);
-myBST.insert(-4);
-console.log(myBST);
-myBST.breadthFirstLog(function(node) {
-  console.log("I am: ", node);
-});
+myBST.insert(1);
+myBST.insert(4);
+myBST.insert(7);
+myBST.insert(12);
+myBST.insert(10);
+myBST.insert(9);
+myBST.insert(11);
+console.log(find2ndLargest(myBST));

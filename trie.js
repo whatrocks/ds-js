@@ -175,12 +175,52 @@ Trie.prototype.printByLevel = function() {
 
 }
 
-var trie = new Trie();
-trie.add("apple");
+// var trie = new Trie();
+// trie.add("apple");
+// console.log(trie);
+// trie.add("app");
+// trie.add("bad");
+// trie.add("add");
+// console.log(trie.getWords());
+// trie.print();
+// trie.printByLevel();
+
+var TrieAgain = function() {
+  this.rootNode = {};
+}
+
+TrieAgain.prototype.checkPresentAndAdd = function(word) {
+  var currentNode = this.rootNode;
+  var isNewWord = false;
+
+  // Work downwards thru the trie, adding nodes
+  // as needed, and keeping tracking of whether we
+  // add any nodes.
+  for (var i = 0; i < word.length; i++) {
+    var char = word[i];
+
+    if (!currentNode.hasOwnProperty(char)) {
+      isNewWord = true;
+      currentNode[char] = {};
+    }
+
+    currentNode = currentNode[char];
+  }
+
+  //Explicitly mark the ned of a word
+  // Otherwise we might say a word is
+  // present if it is a prefix of a different
+  // longer word that was added earlier
+  if (!currentNode.hasOwnProperty("End of Word")) {
+    isNewWord = true;
+    currentNode["End of Word"] = {};
+  }
+  return isNewWord;
+
+}
+
+var trie = new TrieAgain();
+trie.checkPresentAndAdd("apple");
+trie.checkPresentAndAdd("apple");
+trie.checkPresentAndAdd("app");
 console.log(trie);
-trie.add("app");
-trie.add("bad");
-trie.add("add");
-console.log(trie.getWords());
-trie.print();
-trie.printByLevel();
